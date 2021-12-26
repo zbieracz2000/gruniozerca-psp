@@ -1,2 +1,3 @@
-# gruniozerca-psp
+# Gruniożerca PSP Edition
 Gruniożerca for Sony PSP.
+
