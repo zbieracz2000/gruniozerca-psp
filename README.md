@@ -3,7 +3,7 @@ Gruniożerca for Sony PSP.
 
 PSP port of NES game "Gruniożerca". Written in C. Graphics are realised by glib2d library.
 
-It's almost playable, although there's no music, menu, visible lives counter and carrots can glitch sometimes.
+It's almost playable, although there's no music, highscore counter and save.
 
 # Compiling
 If you want to compile the game, you'll need PSP Toolchain. If toolchain is properly installed and configured, just run "make" in main folder of game.
