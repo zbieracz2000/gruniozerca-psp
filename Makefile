@@ -10,6 +10,9 @@ ASFLAGS = $(CFLAGS)
 
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = Gruniozerca PSP Edition
+PSP_EBOOT_ICON = img/ICON0.PNG
+PSP_EBOOT_PIC1 = img/PIC1.PNG
+PSP_EBOOT_SND0 = mus/SND0.at3
 
 PSPSDK=$(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build.mak 
