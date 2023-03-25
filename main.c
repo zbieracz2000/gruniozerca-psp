@@ -30,6 +30,7 @@ PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
 #if _PSP_FW_VERSION >= 200
 PSP_HEAP_SIZE_KB(20480);
 #endif
+int hiscore;
 int randomcolor = 0;
 int buttondelay = 0;
 static int running = 1;
@@ -247,8 +248,103 @@ int main()
   while (1)
   {	sceCtrlPeekBufferPositive(&pad,1);
 	if(screen==1)
-	{	if(pad.Buttons & PSP_CTRL_START)screen=2;
+	{
 		g2dClear(BLACK);
+		g2dBeginRects(num0);	
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(0);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(290,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();
+		score=hiscore;
+		score_math();
+		if(scor2==0)g2dBeginRects(num0);	
+		if(scor2==1)g2dBeginRects(num1);	
+		if(scor2==2)g2dBeginRects(num2);	
+		if(scor2==3)g2dBeginRects(num3);	
+		if(scor2==4)g2dBeginRects(num4);		
+		if(scor2==5)g2dBeginRects(num5);	
+		if(scor2==6)g2dBeginRects(num6);	
+		if(scor2==7)g2dBeginRects(num7);	
+		if(scor2==8)g2dBeginRects(num8);	
+		if(scor2==9)g2dBeginRects(num9);
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(0);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(270,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();
+		if(scor3==0)g2dBeginRects(num0);	
+		if(scor3==1)g2dBeginRects(num1);	
+		if(scor3==2)g2dBeginRects(num2);	
+		if(scor3==3)g2dBeginRects(num3);	
+		if(scor3==4)g2dBeginRects(num4);		
+		if(scor3==5)g2dBeginRects(num5);	
+		if(scor3==6)g2dBeginRects(num6);	
+		if(scor3==7)g2dBeginRects(num7);	
+		if(scor3==8)g2dBeginRects(num8);	
+		if(scor3==9)g2dBeginRects(num9);		
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(255);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(250,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();
+		if(scor4==0)g2dBeginRects(num0);	
+		if(scor4==1)g2dBeginRects(num1);	
+		if(scor4==2)g2dBeginRects(num2);	
+		if(scor4==3)g2dBeginRects(num3);	
+		if(scor4==4)g2dBeginRects(num4);		
+		if(scor4==5)g2dBeginRects(num5);	
+		if(scor4==6)g2dBeginRects(num6);	
+		if(scor4==7)g2dBeginRects(num7);	
+		if(scor4==8)g2dBeginRects(num8);	
+		if(scor4==9)g2dBeginRects(num9);	
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(255);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(230,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();	
+		if(scor5==0)g2dBeginRects(num0);	
+		if(scor5==1)g2dBeginRects(num1);	
+		if(scor5==2)g2dBeginRects(num2);	
+		if(scor5==3)g2dBeginRects(num3);	
+		if(scor5==4)g2dBeginRects(num4);		
+		if(scor5==5)g2dBeginRects(num5);	
+		if(scor5==6)g2dBeginRects(num6);	
+		if(scor5==7)g2dBeginRects(num7);	
+		if(scor5==8)g2dBeginRects(num8);	
+		if(scor5==9)g2dBeginRects(num9);		
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(255);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(210,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();
+		if(scor6==0)g2dBeginRects(num0);	
+		if(scor6==1)g2dBeginRects(num1);	
+		if(scor6==2)g2dBeginRects(num2);	
+		if(scor6==3)g2dBeginRects(num3);	
+		if(scor6==4)g2dBeginRects(num4);		
+		if(scor6==5)g2dBeginRects(num5);	
+		if(scor6==6)g2dBeginRects(num6);	
+		if(scor6==7)g2dBeginRects(num7);	
+		if(scor6==8)g2dBeginRects(num8);	
+		if(scor6==9)g2dBeginRects(num9);	
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(255);
+		g2dSetScaleWH(18,18);
+		g2dSetCoordXY(190,240);
+		g2dSetRotation(0);
+		g2dAdd();
+		g2dEnd();	 
 		g2dBeginRects(start);
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(255);
@@ -266,6 +362,11 @@ int main()
 		g2dAdd();
 		g2dEnd();
 	    g2dFlip(G2D_VSYNC);	
+		if(pad.Buttons & PSP_CTRL_START)
+		{
+			screen=2;
+			score=0;
+		}
 	}
 	if(screen==2)
 	{
@@ -328,6 +429,7 @@ int main()
 		g2dSetRotation(0);		
 		g2dAdd();
 		g2dEnd();
+		/*
 		g2dBeginRects(testmove);
 		if (testmove == NULL) g2dSetColor(GREEN);
 		g2dSetCoordMode(G2D_CENTER);
@@ -345,7 +447,7 @@ int main()
 		g2dSetCoordXY(0,counter);
 		g2dSetRotation(90);
 		g2dAdd();
-		g2dEnd();
+		g2dEnd();*/
 		if (pad.Buttons & PSP_CTRL_LEFT)    
 		{
 			if (xg >=startpoint)xg-=6;
@@ -648,10 +750,15 @@ int main()
 	}
 	if(screen==3)
 	{
-		if(pad.Buttons & PSP_CTRL_LEFT)
+		if(pad.Buttons & PSP_CTRL_CROSS)
 		{
 			screen=1;
 			life=3;
+			if(score>=hiscore)
+			{
+				hiscore=score;
+			}
+			score=0;
 		}
 		g2dClear(BLACK);
 		g2dBeginRects(background);

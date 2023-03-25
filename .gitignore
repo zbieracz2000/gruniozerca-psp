@@ -1,0 +1,6 @@
+
+*.PBP
+*.elf
+*.o
+PARAM.SFO
+gruniozerca-psp.code-workspace
