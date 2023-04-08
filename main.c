@@ -10,7 +10,7 @@
 #include "src/glib2d.h"
 #include "src/callbacks.h"
 #include <psputility.h>
-//#include "src/data.h"
+#include "src/data.h"
 #include <stdlib.h>
 #include <math.h>
 #include <pspmoduleinfo.h>
@@ -23,8 +23,6 @@
 #define FRAME_SIZE (BUF_WIDTH * SCR_HEIGHT * PIXEL_SIZE)
 #define ZBUF_SIZE (BUF_WIDTH SCR_HEIGHT * 2) /* zbuffer seems to be 16-bit? */
 
-#define DATABUFFLEN   0x20
-
 PSP_MODULE_INFO("Gruniozerca",0,1,1);
 PSP_MAIN_THREAD_ATTR(THREAD_ATTR_USER | THREAD_ATTR_VFPU);
 
@@ -34,7 +32,7 @@ PSP_HEAP_SIZE_KB(20480);
 int hiscore;
 int randomcolor = 0;
 int buttondelay = 0;
-//static int running = 1;
+static int running = 1;
 char string[128];
 int screen = 1;
 int score = 0;
@@ -173,7 +171,7 @@ void counter_()
 			}
 		}
 }
-/*PspUtilitySavedataListSaveNewData newData;
+PspUtilitySavedataListSaveNewData newData;
 
 char *titleShow = "New Save";
 
@@ -223,7 +221,7 @@ void initSavedata(SceUtilitySavedataParam * savedata, int mode)
 	savedata->dataSize = DATABUFFLEN;
 
 	// Set some data
-	if (mode == PSP_UTILITY_SAVEDATA_LISTSAVE)
+	if (mode == PSP_UTILITY_SAVEDATA_AUTOSAVE)
 	{
 	memset(savedata->dataBuf, 0, DATABUFFLEN);
 	sprintf(savedata->dataBuf,"%d",hiscore);
@@ -269,6 +267,7 @@ static void ShowSaveDialog (int mode)
     sceUtilitySavedataInitStart(&dialog);
 
     while(running) {
+			g2dFlip(G2D_VSYNC);
 
 	switch(sceUtilitySavedataGetStatus()) {
 
@@ -283,17 +282,19 @@ static void ShowSaveDialog (int mode)
 	    break;
 	    
 	case PSP_UTILITY_DIALOG_FINISHED :
-		screen=0;
-		if(mode == PSP_UTILITY_SAVEDATA_LISTLOAD)
+		if(mode == PSP_UTILITY_SAVEDATA_LISTSAVE)
+			sprintf(string, "Saved: score = 10");
+		else
 			hiscore=atoi((char*)dialog.dataBuf);
-			
+		screen=0;
+
 	case PSP_UTILITY_DIALOG_NONE :
 	    return;
 	}
     }
 }
 
-*/
+
 void counter_start()
 {
 	if(startcounter <=20)
@@ -345,10 +346,10 @@ void launch_carrot()
 }
 int main()
 {
-  //int mode = 0;
+  int mode = 0;
   SceCtrlData pad;
   callbacks_setup();
-  g2dTexture* background = g2dTexLoad("img/background.png",G2D_SWIZZLE);
+  g2dTexture* background = g2dTexLoad("ms0:/TEX/background.png",G2D_SWIZZLE);
   g2dTexture* logo = g2dTexLoad("img/logo.png",G2D_SWIZZLE);
   g2dTexture* start = g2dTexLoad("img/start.png",G2D_SWIZZLE);
   g2dTexture* game_over = g2dTexLoad("img/game_over.png",G2D_SWIZZLE);
@@ -374,21 +375,22 @@ int main()
       y_back = G2D_SCR_H/2,	  
       xg = 200;
   car_lau = startpoint;
-  //SetupGu();
   while (1)
   {	sceCtrlPeekBufferPositive(&pad,1);
 	if(screen==1)
 	{
-		/*if(pad.Buttons & PSP_CTRL_TRIANGLE)
+		if(pad.Buttons & PSP_CTRL_TRIANGLE)
 		{
 			screen=4;
-			mode = PSP_UTILITY_SAVEDATA_LISTSAVE;
+			mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
+			running = 1;
 		}
-		else if(pad.Buttons & PSP_CTRL_SQUARE)
+		/*else if(pad.Buttons & PSP_CTRL_SQUARE)
 		{
+			running=1;
 			screen=4;
 			mode = PSP_UTILITY_SAVEDATA_LISTLOAD;
-		}*/
+		}	*/
 		g2dClear(BLACK);
 		g2dBeginRects(num0);	
 		g2dSetCoordMode(G2D_CENTER);
@@ -897,6 +899,9 @@ int main()
 			if(score>=hiscore)
 			{
 				hiscore=score;
+				screen=4;
+				mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
+				running = 1;
 			}
 			score=0;
 		}
@@ -920,7 +925,7 @@ int main()
 		g2dEnd();
 		g2dFlip(G2D_VSYNC);	
 	}
-	/*if(screen==4)
+	if(screen==4)
 	{
 	while(running)
 	{g2dClear(BLACK);
@@ -929,9 +934,11 @@ int main()
 		{
 			ShowSaveDialog(mode);
 			mode = 0;
+			screen = 1;
+			running =0;
 		}
 	}
-	}*/
+	}
 	if(life==0) screen=3;
   }
 
