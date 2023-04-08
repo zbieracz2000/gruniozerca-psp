@@ -349,7 +349,7 @@ int main()
   int mode = 0;
   SceCtrlData pad;
   callbacks_setup();
-  g2dTexture* background = g2dTexLoad("ms0:/TEX/background.png",G2D_SWIZZLE);
+  g2dTexture* background = g2dTexLoad("img/background.png",G2D_SWIZZLE);
   g2dTexture* logo = g2dTexLoad("img/logo.png",G2D_SWIZZLE);
   g2dTexture* start = g2dTexLoad("img/start.png",G2D_SWIZZLE);
   g2dTexture* game_over = g2dTexLoad("img/game_over.png",G2D_SWIZZLE);
@@ -379,13 +379,13 @@ int main()
   {	sceCtrlPeekBufferPositive(&pad,1);
 	if(screen==1)
 	{
-		if(pad.Buttons & PSP_CTRL_TRIANGLE)
+		/*if(pad.Buttons & PSP_CTRL_TRIANGLE)
 		{
 			screen=4;
 			mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
 			running = 1;
 		}
-		/*else if(pad.Buttons & PSP_CTRL_SQUARE)
+		else if(pad.Buttons & PSP_CTRL_SQUARE)
 		{
 			running=1;
 			screen=4;
