@@ -5,4 +5,4 @@ extern int scoredigit[6];
 void score_math();
 void resetscore();
 
-#endif //SCORE_MATH_INCLUDE
+#endif //GAME_MATH_INCLUDE

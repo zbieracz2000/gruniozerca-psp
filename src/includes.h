@@ -8,10 +8,10 @@
 #include <stdio.h>
 #include <pspgum.h>
 #include "glib2d.h"
-#include "callbacks.h"
 #include <psputility.h>
-#include "data.h"
 #include <stdlib.h>
 #include <math.h>
 #include <pspmoduleinfo.h>
+#include "save.h"
 #include "game_math.h"
+#include "game.h"
