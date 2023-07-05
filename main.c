@@ -24,41 +24,16 @@ int counter = 0;
 int rev = 0;
 int startvisible = 0;
 int waitend = 0;
-int car1 = 0,
-	car2 = 0,
-	car3 = 0,
-	car4 = 0,
-	car5 = 0,
-	car6 = 0,
-	car7 = 0;
-int xgcom1,
-	xgcom2,
-	xgcom3,
-	xgcom4,
-	xgcom5,
-	xgcom6,
-	xgcom7;
-int car1color = 5,
-	car2color = 5,
-	car3color = 5,
-	car4color = 5,
-	car5color = 5,
-	car6color = 5,
-	car7color = 5;
-int car1h = 0,
-	car2h = 0,
-	car3h = 0,
-	car4h = 0,
-	car5h = 0,
-	car6h = 0,
-	car7h = 0;	
-int car1x = 0,
-	car2x = 0,
-	car3x = 0,
-	car4x = 0,
-	car5x = 0,	
-	car6x = 0,
-	car7x = 0;
+struct carrot {
+	int is; //stan
+	int color; //kolor
+	int h;
+	int x;
+	int col; //kolizja
+};
+  struct carrot c1;
+  struct carrot c2;
+  struct carrot c3;
 int blue = 1,
 	red = 0,
 	green = 0,
@@ -146,25 +121,12 @@ void resetscore()
 	scoredigit[1]=0;
 	scoredigit[0]=0;
 }
-void launch_carrot()
-{
-	if(car1==0) car1x = car_lau;
-	if(car2==0) car2x = car_lau;
-	if(car3==0) car3x = car_lau;
-	if(car4==0) car4x = car_lau;
-	if(car5==0) car5x = car_lau;
-	if(car6==0) car4x = car_lau;
-	if(car7==0) car5x = car_lau;
-	if (car1==0) car1 = 1;
-	else if (car2==0) car2 = 1;
-	else if (car3==0) car3 = 1;
-	else if (car4==0) car4 = 1;
-	else if (car5==0) car5 = 1;
-	else if (car6==0) car6 = 1;
-	else if (car7==0) car7 = 1;
-}
+void launch_carrot();
 int main()
 {
+  c1.color = 5;
+  c2.color = 5;
+  c3.color = 5;
   SceCtrlData pad;
   callbacks_setup();
   g2dTexture* background = g2dTexLoad("img/background.png",G2D_SWIZZLE);
@@ -383,146 +345,146 @@ int main()
 			left=0;
 			right=1;
 		}
-		if(car1 == 1)
+		if(c1.is == 1)
 		{	
-			if(car1color==5)
+			if(c1.color==5)
 			{
 			randomcolor = rand() % 40;
-			if (randomcolor>=0) if (randomcolor<=10) car1color=1;
-			if (randomcolor>=11) if (randomcolor<=20) car1color=2;		
-			if (randomcolor>=21) if (randomcolor<=30) car1color=3;
-			if (randomcolor>=31) if (randomcolor<=40) car1color=4;		
+			if (randomcolor>=0) if (randomcolor<=10) c1.color=1;
+			if (randomcolor>=11) if (randomcolor<=20) c1.color=2;		
+			if (randomcolor>=21) if (randomcolor<=30) c1.color=3;
+			if (randomcolor>=31) if (randomcolor<=40) c1.color=4;		
 			}
-			if (car1color==1) g2dBeginRects(red_carrot);
-			else if (car1color==2) g2dBeginRects(blue_carrot);
-			else if (car1color==3) g2dBeginRects(green_carrot);
-			else if (car1color==4) g2dBeginRects(white_carrot);
+			if (c1.color==1) g2dBeginRects(red_carrot);
+			else if (c1.color==2) g2dBeginRects(blue_carrot);
+			else if (c1.color==3) g2dBeginRects(green_carrot);
+			else if (c1.color==4) g2dBeginRects(white_carrot);
 			
-			if(car1h <=220) car1h = car1h+1;
-			 if(car1h >=200) 
+			if(c1.h <=220) c1.h = c1.h+1;
+			 if(c1.h >=200) 
 			 {	
-				if(car1x>=xg) xgcom1=car1x-xg;
-				else if(car1x<=xg) xgcom1=xg-car1x;
-				if(xgcom1>=1) if(xgcom1<=30) if(car1color==color)
+				if(c1.x>=xg) c1.col=c1.x-xg;
+				else if(c1.x<=xg) c1.col=xg-c1.x;
+				if(c1.col>=1) if(c1.col<=30) if(c1.color==color)
 					{
 						score=score+10;
 						g2dReset();
-						car1h = 0;
-						car1 = 0;
-						car1color=5;
+						c1.h = 0;
+						c1.is = 0;
+						c1.color=5;
 					}
 
-				xgcom1=0;
+				c1.col=0;
 			 }
-					if (car1h >=220) 
+					if (c1.h >=220) 
 					{
 					g2dReset();
-					car1h = 0;
-					car1 = 0;
-					car1color=5;
+					c1.h = 0;
+					c1.is = 0;
+					c1.color=5;
 					life--;
 					}
 			if (testmove == NULL) g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
-			g2dSetCoordXY(car1x,car1h);
+			g2dSetCoordXY(c1.x,c1.h);
 			g2dSetRotation(0);
 			g2dAdd();
 			g2dEnd();
 		}		
-		if(car2 == 1)
+		if(c2.is == 1)
 		{	
-			if(car2color==5)
+			if(c2.color==5)
 			{
 			randomcolor = rand() % 40;
-			if (randomcolor>=0) if (randomcolor<=10) car2color=1;
-			if (randomcolor>=11) if (randomcolor<=20) car2color=2;		
-			if (randomcolor>=21) if (randomcolor<=30) car2color=3;
-			if (randomcolor>=31) if (randomcolor<=40) car2color=4;		
+			if (randomcolor>=0) if (randomcolor<=10) c2.color=1;
+			if (randomcolor>=11) if (randomcolor<=20) c2.color=2;		
+			if (randomcolor>=21) if (randomcolor<=30) c2.color=3;
+			if (randomcolor>=31) if (randomcolor<=40) c2.color=4;		
 			}
-			if (car2color==1) g2dBeginRects(red_carrot);
-			else if (car2color==2) g2dBeginRects(blue_carrot);
-			else if (car2color==3) g2dBeginRects(green_carrot);
-			else if (car2color==4) g2dBeginRects(white_carrot);
+			if (c2.color==1) g2dBeginRects(red_carrot);
+			else if (c2.color==2) g2dBeginRects(blue_carrot);
+			else if (c2.color==3) g2dBeginRects(green_carrot);
+			else if (c2.color==4) g2dBeginRects(white_carrot);
 			
-			if(car2h <=220) car2h = car2h+1;
-			 if(car2h >=200) 
+			if(c2.h <=220) c2.h = c2.h+1;
+			 if(c2.h >=200) 
 			 {	
-				if(car2x>=xg) xgcom2=car2x-xg;
-				else if(car2x<=xg) xgcom2=xg-car2x;
-				if(xgcom2>=1) if(xgcom2<=30) if(car2color==color)
+				if(c2.x>=xg) c2.col=c2.x-xg;
+				else if(c2.x<=xg) c2.col=xg-c2.x;
+				if(c2.col>=1) if(c2.col<=30) if(c2.color==color)
 					{
 						score=score+10;
 						g2dReset();
-						car2h = 0;
-						car2 = 0;
-						car2color=5;
+						c2.h = 0;
+						c2.is = 0;
+						c2.color=5;
 					}
 
-				xgcom2=0;
+				c2.col=0;
 			 }
-				if (car2h >=220) 
+				if (c2.h >=220) 
 				{
 					g2dReset();
-					car2h = 0;
-					car2 = 0;
-					car2color=5;
+					c2.h = 0;
+					c2.is = 0;
+					c2.color=5;
 					life--;
 				}
 			if (testmove == NULL) g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
-			g2dSetCoordXY(car2x,car2h);
+			g2dSetCoordXY(c2.x,c2.h);
 			g2dSetRotation(0);
 			g2dAdd();
 			g2dEnd();
 		}		
-		if(car3 == 1)
+		if(c3.is == 1)
 		{	
-			if(car3color==5)
+			if(c3.color==5)
 			{
 			randomcolor = rand() % 40;
-			if (randomcolor>=0) if (randomcolor<=10) car3color=1;
-			if (randomcolor>=11) if (randomcolor<=20) car3color=2;		
-			if (randomcolor>=21) if (randomcolor<=30) car3color=3;
-			if (randomcolor>=31) if (randomcolor<=40) car3color=4;		
+			if (randomcolor>=0) if (randomcolor<=10) c3.color=1;
+			if (randomcolor>=11) if (randomcolor<=20) c3.color=2;		
+			if (randomcolor>=21) if (randomcolor<=30) c3.color=3;
+			if (randomcolor>=31) if (randomcolor<=40) c3.color=4;		
 			}
-			if (car3color==1) g2dBeginRects(red_carrot);
-			else if (car3color==2) g2dBeginRects(blue_carrot);
-			else if (car3color==3) g2dBeginRects(green_carrot);
-			else if (car3color==4) g2dBeginRects(white_carrot);
+			if (c3.color==1) g2dBeginRects(red_carrot);
+			else if (c3.color==2) g2dBeginRects(blue_carrot);
+			else if (c3.color==3) g2dBeginRects(green_carrot);
+			else if (c3.color==4) g2dBeginRects(white_carrot);
 			
-			if(car3h <=220) car3h = car3h+1;
-			 if(car3h >=200) 
+			if(c3.h <=220) c3.h = c3.h+1;
+			 if(c3.h >=200) 
 			 {	
-				if(car3x>=xg) xgcom3=car3x-xg;
-				else if(car3x<=xg) xgcom3=xg-car3x;
-				if(xgcom3>=1) if(xgcom3<=30) if(car3color==color)
+				if(c3.x>=xg) c3.col=c3.x-xg;
+				else if(c3.x<=xg) c3.col=xg-c3.x;
+				if(c3.col>=1) if(c3.col<=30) if(c3.color==color)
 					{
 						score=score+10;
 						g2dReset();
-						car3h = 0;
-						car3 = 0;
-						car3color=5;
+						c3.h = 0;
+						c3.is = 0;
+						c3.color=5;
 					}
 
-				xgcom3=0;
+				c3.col=0;
 			 }
-				if (car3h >=220) 
+				if (c3.h >=220) 
 				{
 					g2dReset();
-					car3h = 0;
-					car3 = 0;
-					car3color=5;
+					c3.h = 0;
+					c3.is = 0;
+					c3.color=5;
 					life--;
 				}
 			if (testmove == NULL)g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
-			g2dSetCoordXY(car3x,car3h);
+			g2dSetCoordXY(c3.x,c3.h);
 			g2dSetRotation(0);
 			g2dAdd();
 			g2dEnd();
@@ -659,3 +621,12 @@ void wait(int numOfSec)
 	while(clock() < startTime + numOfMilliSec);
 }
 
+void launch_carrot()
+{
+	if(c1.is==0) c1.x = car_lau;
+	if(c2.is==0) c2.x = car_lau;
+	if(c3.is==0) c3.x = car_lau;
+	if (c1.is==0) c1.is = 1;
+	else if (c2.is==0) c2.is = 1;
+	else if (c3.is==0) c3.is = 1;
+}

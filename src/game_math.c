@@ -1,11 +1,5 @@
 #include "game_math.h"
-/*int scoredigit[5] = 0, //Licznik punktów działa od tyłu, scoredigit[5] to ostatnia cyfra licznika
-	scoredigit[4] = 0,
-	scoredigit[3] = 0,
-	scoredigit[2] = 0,
-	scoredigit[1] = 0,
-	scoredigit[0] = 0;*/
-	int scoredigit[6];
+int scoredigit[6];
 void score_math(int score)
 {
 	if(score<=99) scoredigit[4]=score/10;
