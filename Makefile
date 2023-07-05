@@ -1,7 +1,7 @@
 MEDIA = /media/PANDORA/psp/game/CAT_Homebrews\ perso/
 TARGET = Gruniozerca
 
-OBJS = main.o src/glib2d.o
+OBJS = main.o src/glib2d.o src/game_math.o
 LIBS = -ljpeg -lpng -lz -lpspgum -lpspgu -lpsprtc -lm -lpspvram
 
 CFLAGS = -O2 -G0 -Wall

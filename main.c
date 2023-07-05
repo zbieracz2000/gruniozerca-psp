@@ -1,19 +1,4 @@
-#include <pspdisplay.h>
-#include <pspkernel.h>
-#include <pspctrl.h>
-#include <time.h>
-#include <pspgu.h>
-#include <pspdebug.h>
-#include <string.h>
-#include <stdio.h>
-#include <pspgum.h>
-#include "src/glib2d.h"
-#include "src/callbacks.h"
-#include <psputility.h>
-#include "src/data.h"
-#include <stdlib.h>
-#include <math.h>
-#include <pspmoduleinfo.h>
+#include "src/includes.h"
 #define DATABUFFLEN   0x20
 #define printf	pspDebugScreenPrintf
 #define BUF_WIDTH (512)
@@ -80,12 +65,6 @@ int car1x = 0,
 	car5x = 0,	
 	car6x = 0,
 	car7x = 0;
-int scor1 = 0, //Licznik punktów działa od tyłu, scor1 to ostatnia cyfra licznika
-	scor2 = 0,
-	scor3 = 0,
-	scor4 = 0,
-	scor5 = 0,
-	scor6 = 0;
 int blue = 1,
 	red = 0,
 	green = 0,
@@ -95,36 +74,7 @@ int blue = 1,
 	color = 2;
 int startcounter = 0;
 	
-void score_math()
-{
-	if(score<=99) scor2=score/10;
-	else if(score<=999) 
-	{
-		scor3=score/100;
-		scor2=(score-scor3*100)/10;
-	}
-	else if(score<=9999)
-	{
-		scor4=score/1000;
-		scor3=(score-scor4*1000)/100;
-		scor2=(score-((scor3*100)+(scor4*1000)))/10;
-	}
-	else if(score<=99999)
-	{
-		scor5=score/10000;
-		scor4=(score-scor5*10000)/1000;
-		scor3=(score-((scor4*1000)+(scor5*10000)))/100;
-		scor2=(score-((scor3*100)+(scor4*1000)+(scor5*10000)))/10;
-	}
-	else if(score<=999999)
-	{
-		scor6=score/100000;
-		scor5=(score-scor6*100000)/10000;
-		scor4=(score-((scor5*10000)+(scor6*100000)))/1000;
-		scor3=(score-((scor4*1000)+(scor5*10000)+(scor6*100000)))/100;
-		scor2=(score-((scor3*100)+(scor4*1000)+(scor5*10000)+(scor6*100000)))/10;
-	}
-}
+
 	
 	void carrot_launcher()
 {
@@ -320,12 +270,12 @@ void counter_start()
 void resetscore()
 {
 	score=0;
-	scor1=0;
-	scor2=0;
-	scor3=0;
-	scor4=0;
-	scor5=0;
-	scor6=0;
+	scoredigit[5]=0;
+	scoredigit[4]=0;
+	scoredigit[3]=0;
+	scoredigit[2]=0;
+	scoredigit[1]=0;
+	scoredigit[0]=0;
 }
 void launch_carrot()
 {
@@ -405,17 +355,17 @@ int main()
 		g2dClear(BLACK);
 		drawsprite(num0, 0, 18, 18, 290, 240, 0);
 		score=hiscore;
-		score_math();
-		if(scor2==0)g2dBeginRects(num0);	
-		if(scor2==1)g2dBeginRects(num1);	
-		if(scor2==2)g2dBeginRects(num2);	
-		if(scor2==3)g2dBeginRects(num3);	
-		if(scor2==4)g2dBeginRects(num4);		
-		if(scor2==5)g2dBeginRects(num5);	
-		if(scor2==6)g2dBeginRects(num6);	
-		if(scor2==7)g2dBeginRects(num7);	
-		if(scor2==8)g2dBeginRects(num8);	
-		if(scor2==9)g2dBeginRects(num9);
+		score_math(score);
+		if(scoredigit[4]==0)g2dBeginRects(num0);	
+		if(scoredigit[4]==1)g2dBeginRects(num1);	
+		if(scoredigit[4]==2)g2dBeginRects(num2);	
+		if(scoredigit[4]==3)g2dBeginRects(num3);	
+		if(scoredigit[4]==4)g2dBeginRects(num4);		
+		if(scoredigit[4]==5)g2dBeginRects(num5);	
+		if(scoredigit[4]==6)g2dBeginRects(num6);	
+		if(scoredigit[4]==7)g2dBeginRects(num7);	
+		if(scoredigit[4]==8)g2dBeginRects(num8);	
+		if(scoredigit[4]==9)g2dBeginRects(num9);
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(0);
 		g2dSetScaleWH(18,18);
@@ -423,16 +373,16 @@ int main()
 		g2dSetRotation(0);
 		g2dAdd();
 		g2dEnd();
-		if(scor3==0)g2dBeginRects(num0);	
-		if(scor3==1)g2dBeginRects(num1);	
-		if(scor3==2)g2dBeginRects(num2);	
-		if(scor3==3)g2dBeginRects(num3);	
-		if(scor3==4)g2dBeginRects(num4);		
-		if(scor3==5)g2dBeginRects(num5);	
-		if(scor3==6)g2dBeginRects(num6);	
-		if(scor3==7)g2dBeginRects(num7);	
-		if(scor3==8)g2dBeginRects(num8);	
-		if(scor3==9)g2dBeginRects(num9);		
+		if(scoredigit[3]==0)g2dBeginRects(num0);	
+		if(scoredigit[3]==1)g2dBeginRects(num1);	
+		if(scoredigit[3]==2)g2dBeginRects(num2);	
+		if(scoredigit[3]==3)g2dBeginRects(num3);	
+		if(scoredigit[3]==4)g2dBeginRects(num4);		
+		if(scoredigit[3]==5)g2dBeginRects(num5);	
+		if(scoredigit[3]==6)g2dBeginRects(num6);	
+		if(scoredigit[3]==7)g2dBeginRects(num7);	
+		if(scoredigit[3]==8)g2dBeginRects(num8);	
+		if(scoredigit[3]==9)g2dBeginRects(num9);		
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(255);
 		g2dSetScaleWH(18,18);
@@ -440,16 +390,16 @@ int main()
 		g2dSetRotation(0);
 		g2dAdd();
 		g2dEnd();
-		if(scor4==0)g2dBeginRects(num0);	
-		if(scor4==1)g2dBeginRects(num1);	
-		if(scor4==2)g2dBeginRects(num2);	
-		if(scor4==3)g2dBeginRects(num3);	
-		if(scor4==4)g2dBeginRects(num4);		
-		if(scor4==5)g2dBeginRects(num5);	
-		if(scor4==6)g2dBeginRects(num6);	
-		if(scor4==7)g2dBeginRects(num7);	
-		if(scor4==8)g2dBeginRects(num8);	
-		if(scor4==9)g2dBeginRects(num9);	
+		if(scoredigit[2]==0)g2dBeginRects(num0);	
+		if(scoredigit[2]==1)g2dBeginRects(num1);	
+		if(scoredigit[2]==2)g2dBeginRects(num2);	
+		if(scoredigit[2]==3)g2dBeginRects(num3);	
+		if(scoredigit[2]==4)g2dBeginRects(num4);		
+		if(scoredigit[2]==5)g2dBeginRects(num5);	
+		if(scoredigit[2]==6)g2dBeginRects(num6);	
+		if(scoredigit[2]==7)g2dBeginRects(num7);	
+		if(scoredigit[2]==8)g2dBeginRects(num8);	
+		if(scoredigit[2]==9)g2dBeginRects(num9);	
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(255);
 		g2dSetScaleWH(18,18);
@@ -457,16 +407,16 @@ int main()
 		g2dSetRotation(0);
 		g2dAdd();
 		g2dEnd();	
-		if(scor5==0)g2dBeginRects(num0);	
-		if(scor5==1)g2dBeginRects(num1);	
-		if(scor5==2)g2dBeginRects(num2);	
-		if(scor5==3)g2dBeginRects(num3);	
-		if(scor5==4)g2dBeginRects(num4);		
-		if(scor5==5)g2dBeginRects(num5);	
-		if(scor5==6)g2dBeginRects(num6);	
-		if(scor5==7)g2dBeginRects(num7);	
-		if(scor5==8)g2dBeginRects(num8);	
-		if(scor5==9)g2dBeginRects(num9);		
+		if(scoredigit[1]==0)g2dBeginRects(num0);	
+		if(scoredigit[1]==1)g2dBeginRects(num1);	
+		if(scoredigit[1]==2)g2dBeginRects(num2);	
+		if(scoredigit[1]==3)g2dBeginRects(num3);	
+		if(scoredigit[1]==4)g2dBeginRects(num4);		
+		if(scoredigit[1]==5)g2dBeginRects(num5);	
+		if(scoredigit[1]==6)g2dBeginRects(num6);	
+		if(scoredigit[1]==7)g2dBeginRects(num7);	
+		if(scoredigit[1]==8)g2dBeginRects(num8);	
+		if(scoredigit[1]==9)g2dBeginRects(num9);		
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(255);
 		g2dSetScaleWH(18,18);
@@ -474,16 +424,16 @@ int main()
 		g2dSetRotation(0);
 		g2dAdd();
 		g2dEnd();
-		if(scor6==0)g2dBeginRects(num0);	
-		if(scor6==1)g2dBeginRects(num1);	
-		if(scor6==2)g2dBeginRects(num2);	
-		if(scor6==3)g2dBeginRects(num3);	
-		if(scor6==4)g2dBeginRects(num4);		
-		if(scor6==5)g2dBeginRects(num5);	
-		if(scor6==6)g2dBeginRects(num6);	
-		if(scor6==7)g2dBeginRects(num7);	
-		if(scor6==8)g2dBeginRects(num8);	
-		if(scor6==9)g2dBeginRects(num9);	
+		if(scoredigit[0]==0)g2dBeginRects(num0);	
+		if(scoredigit[0]==1)g2dBeginRects(num1);	
+		if(scoredigit[0]==2)g2dBeginRects(num2);	
+		if(scoredigit[0]==3)g2dBeginRects(num3);	
+		if(scoredigit[0]==4)g2dBeginRects(num4);		
+		if(scoredigit[0]==5)g2dBeginRects(num5);	
+		if(scoredigit[0]==6)g2dBeginRects(num6);	
+		if(scoredigit[0]==7)g2dBeginRects(num7);	
+		if(scoredigit[0]==8)g2dBeginRects(num8);	
+		if(scoredigit[0]==9)g2dBeginRects(num9);	
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(255);
 		g2dSetScaleWH(18,18);
@@ -531,7 +481,7 @@ int main()
 			white=1;
 		}
 		counter_();
-		score_math();
+		score_math(score);
 		if (buttondelay==0){
 			if (pad.Buttons & PSP_CTRL_SQUARE) 
 			{
@@ -732,60 +682,60 @@ int main()
 		g2dAdd();
 		g2dEnd();  
 		drawsprite(num0, 0, 18, 18, 470, 12, 0);
-		if(scor2==0)drawsprite(num0, 0, 18, 18, 450, 12, 0);
-		if(scor2==1)drawsprite(num1, 0, 18, 18, 450, 12, 0);	
-		if(scor2==2)drawsprite(num2, 0, 18, 18, 450, 12, 0);
-		if(scor2==3)drawsprite(num3, 0, 18, 18, 450, 12, 0);
-		if(scor2==4)drawsprite(num4, 0, 18, 18, 450, 12, 0);		
-		if(scor2==5)drawsprite(num5, 0, 18, 18, 450, 12, 0);
-		if(scor2==6)drawsprite(num6, 0, 18, 18, 450, 12, 0);	
-		if(scor2==7)drawsprite(num7, 0, 18, 18, 450, 12, 0);
-		if(scor2==8)drawsprite(num8, 0, 18, 18, 450, 12, 0);	
-		if(scor2==9)drawsprite(num9, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==0)drawsprite(num0, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==1)drawsprite(num1, 0, 18, 18, 450, 12, 0);	
+		if(scoredigit[4]==2)drawsprite(num2, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==3)drawsprite(num3, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==4)drawsprite(num4, 0, 18, 18, 450, 12, 0);		
+		if(scoredigit[4]==5)drawsprite(num5, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==6)drawsprite(num6, 0, 18, 18, 450, 12, 0);	
+		if(scoredigit[4]==7)drawsprite(num7, 0, 18, 18, 450, 12, 0);
+		if(scoredigit[4]==8)drawsprite(num8, 0, 18, 18, 450, 12, 0);	
+		if(scoredigit[4]==9)drawsprite(num9, 0, 18, 18, 450, 12, 0);
 		//next digit
-		if(scor3==0)drawsprite(num0, 0, 18, 18, 430, 12, 0);	
-		if(scor3==1)drawsprite(num1, 0, 18, 18, 430, 12, 0);	
-		if(scor3==2)drawsprite(num2, 0, 18, 18, 430, 12, 0);	
-		if(scor3==3)drawsprite(num3, 0, 18, 18, 430, 12, 0);	
-		if(scor3==4)drawsprite(num4, 0, 18, 18, 430, 12, 0);
-		if(scor3==5)drawsprite(num5, 0, 18, 18, 430, 12, 0);
-		if(scor3==6)drawsprite(num6, 0, 18, 18, 430, 12, 0);
-		if(scor3==7)drawsprite(num7, 0, 18, 18, 430, 12, 0);
-		if(scor3==8)drawsprite(num8, 0, 18, 18, 430, 12, 0);
-		if(scor3==9)drawsprite(num9, 0, 18, 18, 430, 12, 0);	
+		if(scoredigit[3]==0)drawsprite(num0, 0, 18, 18, 430, 12, 0);	
+		if(scoredigit[3]==1)drawsprite(num1, 0, 18, 18, 430, 12, 0);	
+		if(scoredigit[3]==2)drawsprite(num2, 0, 18, 18, 430, 12, 0);	
+		if(scoredigit[3]==3)drawsprite(num3, 0, 18, 18, 430, 12, 0);	
+		if(scoredigit[3]==4)drawsprite(num4, 0, 18, 18, 430, 12, 0);
+		if(scoredigit[3]==5)drawsprite(num5, 0, 18, 18, 430, 12, 0);
+		if(scoredigit[3]==6)drawsprite(num6, 0, 18, 18, 430, 12, 0);
+		if(scoredigit[3]==7)drawsprite(num7, 0, 18, 18, 430, 12, 0);
+		if(scoredigit[3]==8)drawsprite(num8, 0, 18, 18, 430, 12, 0);
+		if(scoredigit[3]==9)drawsprite(num9, 0, 18, 18, 430, 12, 0);	
 		//next digit
-		if(scor4==0)drawsprite(num0, 0, 18, 18, 410, 12, 0);
-		if(scor4==1)drawsprite(num1, 0, 18, 18, 410, 12, 0);
-		if(scor4==2)drawsprite(num2, 0, 18, 18, 410, 12, 0);
-		if(scor4==3)drawsprite(num3, 0, 18, 18, 410, 12, 0);
-		if(scor4==4)drawsprite(num4, 0, 18, 18, 410, 12, 0);
-		if(scor4==5)drawsprite(num5, 0, 18, 18, 410, 12, 0);	
-		if(scor4==6)drawsprite(num6, 0, 18, 18, 410, 12, 0);
-		if(scor4==7)drawsprite(num7, 0, 18, 18, 410, 12, 0);
-		if(scor4==8)drawsprite(num8, 0, 18, 18, 410, 12, 0);
-		if(scor4==9)drawsprite(num9, 0, 18, 18, 410, 12, 0);	
+		if(scoredigit[2]==0)drawsprite(num0, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==1)drawsprite(num1, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==2)drawsprite(num2, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==3)drawsprite(num3, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==4)drawsprite(num4, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==5)drawsprite(num5, 0, 18, 18, 410, 12, 0);	
+		if(scoredigit[2]==6)drawsprite(num6, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==7)drawsprite(num7, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==8)drawsprite(num8, 0, 18, 18, 410, 12, 0);
+		if(scoredigit[2]==9)drawsprite(num9, 0, 18, 18, 410, 12, 0);	
 		//next digit
-		if(scor5==0)drawsprite(num0, 0, 18, 18, 390, 12, 0);
-		if(scor5==1)drawsprite(num1, 0, 18, 18, 390, 12, 0);
-		if(scor5==2)drawsprite(num2, 0, 18, 18, 390, 12, 0);	
-		if(scor5==3)drawsprite(num3, 0, 18, 18, 390, 12, 0);
-		if(scor5==4)drawsprite(num4, 0, 18, 18, 390, 12, 0);		
-		if(scor5==5)drawsprite(num5, 0, 18, 18, 390, 12, 0);
-		if(scor5==6)drawsprite(num6, 0, 18, 18, 390, 12, 0);	
-		if(scor5==7)drawsprite(num7, 0, 18, 18, 390, 12, 0);
-		if(scor5==8)drawsprite(num8, 0, 18, 18, 390, 12, 0);
-		if(scor5==9)drawsprite(num9, 0, 18, 18, 390, 12, 0);	
+		if(scoredigit[1]==0)drawsprite(num0, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==1)drawsprite(num1, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==2)drawsprite(num2, 0, 18, 18, 390, 12, 0);	
+		if(scoredigit[1]==3)drawsprite(num3, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==4)drawsprite(num4, 0, 18, 18, 390, 12, 0);		
+		if(scoredigit[1]==5)drawsprite(num5, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==6)drawsprite(num6, 0, 18, 18, 390, 12, 0);	
+		if(scoredigit[1]==7)drawsprite(num7, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==8)drawsprite(num8, 0, 18, 18, 390, 12, 0);
+		if(scoredigit[1]==9)drawsprite(num9, 0, 18, 18, 390, 12, 0);	
 		//next digit
-		if(scor6==0)drawsprite(num0, 0, 18, 18, 370, 12, 0);
-		if(scor6==1)drawsprite(num1, 0, 18, 18, 370, 12, 0);		
-		if(scor6==2)drawsprite(num2, 0, 18, 18, 370, 12, 0);	
-		if(scor6==3)drawsprite(num3, 0, 18, 18, 370, 12, 0);	
-		if(scor6==4)drawsprite(num4, 0, 18, 18, 370, 12, 0);		
-		if(scor6==5)drawsprite(num5, 0, 18, 18, 370, 12, 0);	
-		if(scor6==6)drawsprite(num6, 0, 18, 18, 370, 12, 0);	
-		if(scor6==7)drawsprite(num7, 0, 18, 18, 370, 12, 0);	
-		if(scor6==8)drawsprite(num8, 0, 18, 18, 370, 12, 0);	
-		if(scor6==9)drawsprite(num9, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==0)drawsprite(num0, 0, 18, 18, 370, 12, 0);
+		if(scoredigit[0]==1)drawsprite(num1, 0, 18, 18, 370, 12, 0);		
+		if(scoredigit[0]==2)drawsprite(num2, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==3)drawsprite(num3, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==4)drawsprite(num4, 0, 18, 18, 370, 12, 0);		
+		if(scoredigit[0]==5)drawsprite(num5, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==6)drawsprite(num6, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==7)drawsprite(num7, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==8)drawsprite(num8, 0, 18, 18, 370, 12, 0);	
+		if(scoredigit[0]==9)drawsprite(num9, 0, 18, 18, 370, 12, 0);	
 		if(life>=1)drawsprite(heart, 255, 18, 16, 12, 11, 0);
 		else drawsprite(emptyheart, 255, 18, 16, 12, 11, 0);
 		if(life>=2)drawsprite(heart, 255, 18, 16, 32, 11, 0);

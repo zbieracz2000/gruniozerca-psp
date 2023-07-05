@@ -1,0 +1,17 @@
+#include <pspdisplay.h>
+#include <pspkernel.h>
+#include <pspctrl.h>
+#include <time.h>
+#include <pspgu.h>
+#include <pspdebug.h>
+#include <string.h>
+#include <stdio.h>
+#include <pspgum.h>
+#include "glib2d.h"
+#include "callbacks.h"
+#include <psputility.h>
+#include "data.h"
+#include <stdlib.h>
+#include <math.h>
+#include <pspmoduleinfo.h>
+#include "game_math.h"
