@@ -1,3 +1,7 @@
+// Gruniożerca for Sony Playstation Portable
+// by zbieracz2000
+// github.com/zbieracz2000 
+
 #include "src/includes.h"
 #include "src/callbacks.h"
 #define printf	pspDebugScreenPrintf
@@ -20,8 +24,6 @@ int startpoint = 10;
 int endpoint = 470;
 int dir = 0;
 int car_lau;
-int counter = 0;
-int rev = 0;
 int startvisible = 0;
 int waitend = 0;
 struct carrot {
@@ -65,30 +67,6 @@ void carrot_launcher()
 		}
 }
 
-void counter_()
-{
-	if(counter <=200)
-		{
-			if(rev == 0)
-			{
-			counter = counter+5;
-			}
-		}
-	if(counter == 200)
-		{
-		rev = 1;
-		}
-	if(rev == 1)
-		{
-		counter = counter-5;
-		if(counter == 0)
-			{
-				rev = 0;
-			}
-		}
-}
-
-
 void counter_start()
 {
 	if(startcounter <=20)
@@ -124,52 +102,112 @@ void resetscore()
 void launch_carrot();
 int main()
 {
-  c1.color = 5;
-  c2.color = 5;
-  c3.color = 5;
-  SceCtrlData pad;
-  callbacks_setup();
-  g2dTexture* background = g2dTexLoad("img/background.png",G2D_SWIZZLE);
-  g2dTexture* logo = g2dTexLoad("img/logo.png",G2D_SWIZZLE);
-  g2dTexture* start = g2dTexLoad("img/start.png",G2D_SWIZZLE);
-  g2dTexture* game_over = g2dTexLoad("img/game_over.png",G2D_SWIZZLE);
-  g2dTexture* grunio = g2dTexLoad("img/grunio.png",G2D_SWIZZLE); 	
-  g2dTexture* testmove = g2dTexLoad("img/testmove.png",G2D_SWIZZLE);
-  g2dTexture* blue_carrot = g2dTexLoad("img/marchewblue.png",G2D_SWIZZLE);
-  g2dTexture* red_carrot = g2dTexLoad("img/marchewred.png",G2D_SWIZZLE);
-  g2dTexture* green_carrot = g2dTexLoad("img/marchewgreen.png",G2D_SWIZZLE);
-  g2dTexture* white_carrot = g2dTexLoad("img/marchewwhite.png",G2D_SWIZZLE);
-  g2dTexture* heart = g2dTexLoad("img/heart.png",G2D_SWIZZLE);
-  g2dTexture* emptyheart = g2dTexLoad("img/emptyheart.png",G2D_SWIZZLE);  
-  g2dTexture* num0 = g2dTexLoad("font/0.png",G2D_SWIZZLE);
-  g2dTexture* num1 = g2dTexLoad("font/1.png",G2D_SWIZZLE);
-  g2dTexture* num2 = g2dTexLoad("font/2.png",G2D_SWIZZLE);
-  g2dTexture* num3 = g2dTexLoad("font/3.png",G2D_SWIZZLE);
-  g2dTexture* num4 = g2dTexLoad("font/4.png",G2D_SWIZZLE);
-  g2dTexture* num5 = g2dTexLoad("font/5.png",G2D_SWIZZLE);
-  g2dTexture* num6 = g2dTexLoad("font/6.png",G2D_SWIZZLE);
-  g2dTexture* num7 = g2dTexLoad("font/7.png",G2D_SWIZZLE);
-  g2dTexture* num8 = g2dTexLoad("font/8.png",G2D_SWIZZLE);
-  g2dTexture* num9 = g2dTexLoad("font/9.png",G2D_SWIZZLE);
-  void drawsprite(g2dTexture* texture, int alpha, int w, int h, int x, int y, int rotation)
-  {
-	g2dBeginRects(texture);	
-	g2dSetCoordMode(G2D_CENTER);
-	g2dSetAlpha(alpha);
-	g2dSetScaleWH(w,h);
-	g2dSetCoordXY(x,y);
-	g2dSetRotation(rotation);
-	g2dAdd();
-	g2dEnd();
-  }			
-  int x_back = G2D_SCR_W/2,
-      y_back = G2D_SCR_H/2,	  
-      xg = 200;
-  car_lau = startpoint;
-  while (1)
-  {	sceCtrlPeekBufferPositive(&pad,1);
-	if(screen==1)
+	c1.color = 5;
+	c2.color = 5;
+	c3.color = 5;
+	SceCtrlData pad;
+	callbacks_setup();
+	g2dTexture* background = g2dTexLoad("img/background.png",G2D_SWIZZLE);
+	g2dTexture* logo = g2dTexLoad("img/logo.png",G2D_SWIZZLE);
+	g2dTexture* start = g2dTexLoad("img/start.png",G2D_SWIZZLE);
+	g2dTexture* game_over = g2dTexLoad("img/game_over.png",G2D_SWIZZLE);
+	g2dTexture* grunio = g2dTexLoad("img/grunio.png",G2D_SWIZZLE); 	
+	g2dTexture* blue_carrot = g2dTexLoad("img/marchewblue.png",G2D_SWIZZLE);
+	g2dTexture* red_carrot = g2dTexLoad("img/marchewred.png",G2D_SWIZZLE);
+	g2dTexture* green_carrot = g2dTexLoad("img/marchewgreen.png",G2D_SWIZZLE);
+	g2dTexture* white_carrot = g2dTexLoad("img/marchewwhite.png",G2D_SWIZZLE);
+	g2dTexture* heart = g2dTexLoad("img/heart.png",G2D_SWIZZLE);
+	g2dTexture* emptyheart = g2dTexLoad("img/emptyheart.png",G2D_SWIZZLE);  
+	g2dTexture* num0 = g2dTexLoad("font/0.png",G2D_SWIZZLE);
+	g2dTexture* num1 = g2dTexLoad("font/1.png",G2D_SWIZZLE);
+	g2dTexture* num2 = g2dTexLoad("font/2.png",G2D_SWIZZLE);
+	g2dTexture* num3 = g2dTexLoad("font/3.png",G2D_SWIZZLE);
+	g2dTexture* num4 = g2dTexLoad("font/4.png",G2D_SWIZZLE);
+	g2dTexture* num5 = g2dTexLoad("font/5.png",G2D_SWIZZLE);
+	g2dTexture* num6 = g2dTexLoad("font/6.png",G2D_SWIZZLE);
+	g2dTexture* num7 = g2dTexLoad("font/7.png",G2D_SWIZZLE);
+	g2dTexture* num8 = g2dTexLoad("font/8.png",G2D_SWIZZLE);
+	g2dTexture* num9 = g2dTexLoad("font/9.png",G2D_SWIZZLE);
+	void drawsprite(g2dTexture* texture, int alpha, int w, int h, int x, int y, int rotation)
+  	{
+		g2dBeginRects(texture);	
+		g2dSetCoordMode(G2D_CENTER);
+		g2dSetAlpha(alpha);
+		g2dSetScaleWH(w,h);
+		g2dSetCoordXY(x,y);
+		g2dSetRotation(rotation);
+		g2dAdd();
+		g2dEnd();
+  	}			
+	void drawcounter(int points, int x, int y)
 	{
+		score_math(points);
+		drawsprite(num0, 0, 18, 18, x+100, y, 0);
+		if(scoredigit[4]==0)drawsprite(num0, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==1)drawsprite(num1, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==2)drawsprite(num2, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==3)drawsprite(num3, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==4)drawsprite(num4, 255, 18, 18, x+80, y, 0); 		
+		if(scoredigit[4]==5)drawsprite(num5, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==6)drawsprite(num6, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==7)drawsprite(num7, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==8)drawsprite(num8, 255, 18, 18, x+80, y, 0); 	
+		if(scoredigit[4]==9)drawsprite(num9, 255, 18, 18, x+80, y, 0); 
+		//
+		if(scoredigit[3]==0)drawsprite(num0, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==1)drawsprite(num1, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==2)drawsprite(num2, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==3)drawsprite(num3, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==4)drawsprite(num4, 255, 18, 18, x+60, y, 0); 		
+		if(scoredigit[3]==5)drawsprite(num5, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==6)drawsprite(num6, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==7)drawsprite(num7, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==8)drawsprite(num8, 255, 18, 18, x+60, y, 0); 	
+		if(scoredigit[3]==9)drawsprite(num9, 255, 18, 18, x+60, y, 0); 		
+		//
+		if(scoredigit[2]==0)drawsprite(num0, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==1)drawsprite(num1, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==2)drawsprite(num2, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==3)drawsprite(num3, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==4)drawsprite(num4, 255, 18, 18, x+40, y, 0); 		
+		if(scoredigit[2]==5)drawsprite(num5, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==6)drawsprite(num6, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==7)drawsprite(num7, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==8)drawsprite(num8, 255, 18, 18, x+40, y, 0); 	
+		if(scoredigit[2]==9)drawsprite(num9, 255, 18, 18, x+40, y, 0); 	
+		//
+		if(scoredigit[1]==0)drawsprite(num0, 255, 18, 18, x+20, y, 0);	
+		if(scoredigit[1]==1)drawsprite(num1, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==2)drawsprite(num2, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==3)drawsprite(num3, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==4)drawsprite(num4, 255, 18, 18, x+20, y, 0); 		
+		if(scoredigit[1]==5)drawsprite(num5, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==6)drawsprite(num6, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==7)drawsprite(num7, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==8)drawsprite(num8, 255, 18, 18, x+20, y, 0); 	
+		if(scoredigit[1]==9)drawsprite(num9, 255, 18, 18, x+20, y, 0); 		
+		//
+		if(scoredigit[0]==0)drawsprite(num0, 255, 18, 18, x, y, 0); 
+		if(scoredigit[0]==1)drawsprite(num1, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==2)drawsprite(num2, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==3)drawsprite(num3, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==4)drawsprite(num4, 255, 18, 18, x, y, 0); 		
+		if(scoredigit[0]==5)drawsprite(num5, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==6)drawsprite(num6, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==7)drawsprite(num7, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==8)drawsprite(num8, 255, 18, 18, x, y, 0); 	
+		if(scoredigit[0]==9)drawsprite(num9, 255, 18, 18, x, y, 0);
+
+	}
+	int x_back = G2D_SCR_W/2,
+	y_back = G2D_SCR_H/2,	  
+    xg = 200;
+	car_lau = startpoint;  
+	while (1)
+	{
+		sceCtrlPeekBufferPositive(&pad,1);
+		if(screen==1)
+		{
 		/*if(pad.Buttons & PSP_CTRL_TRIANGLE)
 		{
 			screen=4;
@@ -183,94 +221,7 @@ int main()
 			mode = PSP_UTILITY_SAVEDATA_LISTLOAD;
 		}	*/
 		g2dClear(BLACK);
-		drawsprite(num0, 0, 18, 18, 290, 240, 0);
-		score=hiscore;
-		score_math(score);
-		if(scoredigit[4]==0)g2dBeginRects(num0);	
-		if(scoredigit[4]==1)g2dBeginRects(num1);	
-		if(scoredigit[4]==2)g2dBeginRects(num2);	
-		if(scoredigit[4]==3)g2dBeginRects(num3);	
-		if(scoredigit[4]==4)g2dBeginRects(num4);		
-		if(scoredigit[4]==5)g2dBeginRects(num5);	
-		if(scoredigit[4]==6)g2dBeginRects(num6);	
-		if(scoredigit[4]==7)g2dBeginRects(num7);	
-		if(scoredigit[4]==8)g2dBeginRects(num8);	
-		if(scoredigit[4]==9)g2dBeginRects(num9);
-		g2dSetCoordMode(G2D_CENTER);
-		g2dSetAlpha(0);
-		g2dSetScaleWH(18,18);
-		g2dSetCoordXY(270,240);
-		g2dSetRotation(0);
-		g2dAdd();
-		g2dEnd();
-		if(scoredigit[3]==0)g2dBeginRects(num0);	
-		if(scoredigit[3]==1)g2dBeginRects(num1);	
-		if(scoredigit[3]==2)g2dBeginRects(num2);	
-		if(scoredigit[3]==3)g2dBeginRects(num3);	
-		if(scoredigit[3]==4)g2dBeginRects(num4);		
-		if(scoredigit[3]==5)g2dBeginRects(num5);	
-		if(scoredigit[3]==6)g2dBeginRects(num6);	
-		if(scoredigit[3]==7)g2dBeginRects(num7);	
-		if(scoredigit[3]==8)g2dBeginRects(num8);	
-		if(scoredigit[3]==9)g2dBeginRects(num9);		
-		g2dSetCoordMode(G2D_CENTER);
-		g2dSetAlpha(255);
-		g2dSetScaleWH(18,18);
-		g2dSetCoordXY(250,240);
-		g2dSetRotation(0);
-		g2dAdd();
-		g2dEnd();
-		if(scoredigit[2]==0)g2dBeginRects(num0);	
-		if(scoredigit[2]==1)g2dBeginRects(num1);	
-		if(scoredigit[2]==2)g2dBeginRects(num2);	
-		if(scoredigit[2]==3)g2dBeginRects(num3);	
-		if(scoredigit[2]==4)g2dBeginRects(num4);		
-		if(scoredigit[2]==5)g2dBeginRects(num5);	
-		if(scoredigit[2]==6)g2dBeginRects(num6);	
-		if(scoredigit[2]==7)g2dBeginRects(num7);	
-		if(scoredigit[2]==8)g2dBeginRects(num8);	
-		if(scoredigit[2]==9)g2dBeginRects(num9);	
-		g2dSetCoordMode(G2D_CENTER);
-		g2dSetAlpha(255);
-		g2dSetScaleWH(18,18);
-		g2dSetCoordXY(230,240);
-		g2dSetRotation(0);
-		g2dAdd();
-		g2dEnd();	
-		if(scoredigit[1]==0)g2dBeginRects(num0);	
-		if(scoredigit[1]==1)g2dBeginRects(num1);	
-		if(scoredigit[1]==2)g2dBeginRects(num2);	
-		if(scoredigit[1]==3)g2dBeginRects(num3);	
-		if(scoredigit[1]==4)g2dBeginRects(num4);		
-		if(scoredigit[1]==5)g2dBeginRects(num5);	
-		if(scoredigit[1]==6)g2dBeginRects(num6);	
-		if(scoredigit[1]==7)g2dBeginRects(num7);	
-		if(scoredigit[1]==8)g2dBeginRects(num8);	
-		if(scoredigit[1]==9)g2dBeginRects(num9);		
-		g2dSetCoordMode(G2D_CENTER);
-		g2dSetAlpha(255);
-		g2dSetScaleWH(18,18);
-		g2dSetCoordXY(210,240);
-		g2dSetRotation(0);
-		g2dAdd();
-		g2dEnd();
-		if(scoredigit[0]==0)g2dBeginRects(num0);	
-		if(scoredigit[0]==1)g2dBeginRects(num1);	
-		if(scoredigit[0]==2)g2dBeginRects(num2);	
-		if(scoredigit[0]==3)g2dBeginRects(num3);	
-		if(scoredigit[0]==4)g2dBeginRects(num4);		
-		if(scoredigit[0]==5)g2dBeginRects(num5);	
-		if(scoredigit[0]==6)g2dBeginRects(num6);	
-		if(scoredigit[0]==7)g2dBeginRects(num7);	
-		if(scoredigit[0]==8)g2dBeginRects(num8);	
-		if(scoredigit[0]==9)g2dBeginRects(num9);	
-		g2dSetCoordMode(G2D_CENTER);
-		g2dSetAlpha(255);
-		g2dSetScaleWH(18,18);
-		g2dSetCoordXY(190,240);
-		g2dSetRotation(0);
-		g2dAdd();
-		g2dEnd();	
+		drawcounter(hiscore, 190, 240);
 		drawsprite(start, 255, 172, 14, 240, 156, 0);
 		drawsprite(logo, 255, 176, 40, 240, 76, 0); 
 	    g2dFlip(G2D_VSYNC);	
@@ -311,7 +262,6 @@ int main()
 			white=1;
 		}
 		counter_();
-		score_math(score);
 		if (buttondelay==0){
 			if (pad.Buttons & PSP_CTRL_SQUARE) 
 			{
@@ -349,11 +299,11 @@ int main()
 		{	
 			if(c1.color==5)
 			{
-			randomcolor = rand() % 40;
-			if (randomcolor>=0) if (randomcolor<=10) c1.color=1;
-			if (randomcolor>=11) if (randomcolor<=20) c1.color=2;		
-			if (randomcolor>=21) if (randomcolor<=30) c1.color=3;
-			if (randomcolor>=31) if (randomcolor<=40) c1.color=4;		
+				randomcolor = rand() % 40;
+				if (randomcolor>=0) if (randomcolor<=10) c1.color=1;
+				if (randomcolor>=11) if (randomcolor<=20) c1.color=2;		
+				if (randomcolor>=21) if (randomcolor<=30) c1.color=3;
+				if (randomcolor>=31) if (randomcolor<=40) c1.color=4;		
 			}
 			if (c1.color==1) g2dBeginRects(red_carrot);
 			else if (c1.color==2) g2dBeginRects(blue_carrot);
@@ -361,8 +311,8 @@ int main()
 			else if (c1.color==4) g2dBeginRects(white_carrot);
 			
 			if(c1.h <=220) c1.h = c1.h+1;
-			 if(c1.h >=200) 
-			 {	
+			if(c1.h >=200) 
+			{	
 				if(c1.x>=xg) c1.col=c1.x-xg;
 				else if(c1.x<=xg) c1.col=xg-c1.x;
 				if(c1.col>=1) if(c1.col<=30) if(c1.color==color)
@@ -375,7 +325,7 @@ int main()
 					}
 
 				c1.col=0;
-			 }
+			}
 					if (c1.h >=220) 
 					{
 					g2dReset();
@@ -384,7 +334,6 @@ int main()
 					c1.color=5;
 					life--;
 					}
-			if (testmove == NULL) g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
@@ -432,7 +381,6 @@ int main()
 					c2.color=5;
 					life--;
 				}
-			if (testmove == NULL) g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
@@ -480,7 +428,6 @@ int main()
 					c3.color=5;
 					life--;
 				}
-			if (testmove == NULL)g2dSetColor(BLUE);	
 			g2dSetCoordMode(G2D_CENTER);
 			g2dSetAlpha(255);
 			g2dSetScaleWH(20,32);
@@ -511,61 +458,7 @@ int main()
 		}	
 		g2dAdd();
 		g2dEnd();  
-		drawsprite(num0, 0, 18, 18, 470, 12, 0);
-		if(scoredigit[4]==0)drawsprite(num0, 0, 18, 18, 450, 12, 0);
-		if(scoredigit[4]==1)drawsprite(num1, 0, 18, 18, 450, 12, 0);	
-		if(scoredigit[4]==2)drawsprite(num2, 0, 18, 18, 450, 12, 0);
-		if(scoredigit[4]==3)drawsprite(num3, 0, 18, 18, 450, 12, 0);
-		if(scoredigit[4]==4)drawsprite(num4, 0, 18, 18, 450, 12, 0);		
-		if(scoredigit[4]==5)drawsprite(num5, 0, 18, 18, 450, 12, 0);
-		if(scoredigit[4]==6)drawsprite(num6, 0, 18, 18, 450, 12, 0);	
-		if(scoredigit[4]==7)drawsprite(num7, 0, 18, 18, 450, 12, 0);
-		if(scoredigit[4]==8)drawsprite(num8, 0, 18, 18, 450, 12, 0);	
-		if(scoredigit[4]==9)drawsprite(num9, 0, 18, 18, 450, 12, 0);
-		//next digit
-		if(scoredigit[3]==0)drawsprite(num0, 0, 18, 18, 430, 12, 0);	
-		if(scoredigit[3]==1)drawsprite(num1, 0, 18, 18, 430, 12, 0);	
-		if(scoredigit[3]==2)drawsprite(num2, 0, 18, 18, 430, 12, 0);	
-		if(scoredigit[3]==3)drawsprite(num3, 0, 18, 18, 430, 12, 0);	
-		if(scoredigit[3]==4)drawsprite(num4, 0, 18, 18, 430, 12, 0);
-		if(scoredigit[3]==5)drawsprite(num5, 0, 18, 18, 430, 12, 0);
-		if(scoredigit[3]==6)drawsprite(num6, 0, 18, 18, 430, 12, 0);
-		if(scoredigit[3]==7)drawsprite(num7, 0, 18, 18, 430, 12, 0);
-		if(scoredigit[3]==8)drawsprite(num8, 0, 18, 18, 430, 12, 0);
-		if(scoredigit[3]==9)drawsprite(num9, 0, 18, 18, 430, 12, 0);	
-		//next digit
-		if(scoredigit[2]==0)drawsprite(num0, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==1)drawsprite(num1, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==2)drawsprite(num2, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==3)drawsprite(num3, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==4)drawsprite(num4, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==5)drawsprite(num5, 0, 18, 18, 410, 12, 0);	
-		if(scoredigit[2]==6)drawsprite(num6, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==7)drawsprite(num7, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==8)drawsprite(num8, 0, 18, 18, 410, 12, 0);
-		if(scoredigit[2]==9)drawsprite(num9, 0, 18, 18, 410, 12, 0);	
-		//next digit
-		if(scoredigit[1]==0)drawsprite(num0, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==1)drawsprite(num1, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==2)drawsprite(num2, 0, 18, 18, 390, 12, 0);	
-		if(scoredigit[1]==3)drawsprite(num3, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==4)drawsprite(num4, 0, 18, 18, 390, 12, 0);		
-		if(scoredigit[1]==5)drawsprite(num5, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==6)drawsprite(num6, 0, 18, 18, 390, 12, 0);	
-		if(scoredigit[1]==7)drawsprite(num7, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==8)drawsprite(num8, 0, 18, 18, 390, 12, 0);
-		if(scoredigit[1]==9)drawsprite(num9, 0, 18, 18, 390, 12, 0);	
-		//next digit
-		if(scoredigit[0]==0)drawsprite(num0, 0, 18, 18, 370, 12, 0);
-		if(scoredigit[0]==1)drawsprite(num1, 0, 18, 18, 370, 12, 0);		
-		if(scoredigit[0]==2)drawsprite(num2, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==3)drawsprite(num3, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==4)drawsprite(num4, 0, 18, 18, 370, 12, 0);		
-		if(scoredigit[0]==5)drawsprite(num5, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==6)drawsprite(num6, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==7)drawsprite(num7, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==8)drawsprite(num8, 0, 18, 18, 370, 12, 0);	
-		if(scoredigit[0]==9)drawsprite(num9, 0, 18, 18, 370, 12, 0);	
+		drawcounter(score, 370, 12);
 		if(life>=1)drawsprite(heart, 255, 18, 16, 12, 11, 0);
 		else drawsprite(emptyheart, 255, 18, 16, 12, 11, 0);
 		if(life>=2)drawsprite(heart, 255, 18, 16, 32, 11, 0);
@@ -597,7 +490,8 @@ int main()
 	if(screen==4)
 	{
 	while(running)
-	{g2dClear(BLACK);
+	{
+	g2dClear(BLACK);
 	g2dFlip(G2D_VSYNC);
 		if(mode)
 		{
@@ -613,12 +507,6 @@ int main()
 
   sceKernelExitGame();
   return 0;
-}
-void wait(int numOfSec)
-{
-	int numOfMilliSec = 1000 * numOfSec;
-	time_t startTime = clock();
-	while(clock() < startTime + numOfMilliSec);
 }
 
 void launch_carrot()

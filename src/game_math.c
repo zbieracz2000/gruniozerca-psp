@@ -1,4 +1,5 @@
 #include "game_math.h"
+#include <time.h>
 int scoredigit[6];
 void score_math(int score)
 {
@@ -29,4 +30,34 @@ void score_math(int score)
 		scoredigit[3]=(score-((scoredigit[2]*1000)+(scoredigit[1]*10000)+(scoredigit[0]*100000)))/100;
 		scoredigit[4]=(score-((scoredigit[3]*100)+(scoredigit[2]*1000)+(scoredigit[1]*10000)+(scoredigit[0]*100000)))/10;
 	}
+}
+int counter = 0;
+int rev = 0;
+void counter_()
+{
+	if(counter <=200)
+		{
+			if(rev == 0)
+			{
+			counter = counter+5;
+			}
+		}
+	if(counter == 200)
+		{
+		rev = 1;
+		}
+	if(rev == 1)
+		{
+		counter = counter-5;
+		if(counter == 0)
+			{
+				rev = 0;
+			}
+		}
+}
+void wait(int numOfSec)
+{
+	int numOfMilliSec = 1000 * numOfSec;
+	time_t startTime = clock();
+	while(clock() < startTime + numOfMilliSec);
 }

@@ -1,7 +1,7 @@
 TARGET = Gruniozerca
 
-OBJS = src/glib2d.o src/game_math.o src/save.o src/game.o main.o
-LIBS = -ljpeg -lpng -lz -lpspgum -lpspgu -lpsprtc -lm -lpspvram
+OBJS = src/glib2d.o src/sound.o src/game_math.o src/save.o src/game.o main.o
+LIBS = -ljpeg -lpng -lz -lpspgum -lpspgu -lpsprtc -lm -lpspvram -lpspaudio -lpspmp3
 
 CFLAGS = -O2 -G0 -Wall
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti

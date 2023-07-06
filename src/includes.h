@@ -15,3 +15,4 @@
 #include "save.h"
 #include "game_math.h"
 #include "game.h"
+#include "sound.h"
