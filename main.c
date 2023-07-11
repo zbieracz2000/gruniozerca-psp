@@ -4,7 +4,6 @@
 
 #include "src/includes.h"
 #include "src/callbacks.h"
-#define printf	pspDebugScreenPrintf
 #define BUF_WIDTH (512)
 #define SCR_WIDTH (480)
 #define SCR_HEIGHT (272)
@@ -131,6 +130,7 @@ int main()
 	void drawsprite(g2dTexture* texture, int alpha, int w, int h, int x, int y, int rotation)
   	{
 		g2dBeginRects(texture);	
+		g2dSetTexLinear(false);
 		g2dSetCoordMode(G2D_CENTER);
 		g2dSetAlpha(alpha);
 		g2dSetScaleWH(w,h);
