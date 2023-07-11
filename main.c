@@ -19,8 +19,8 @@ PSP_HEAP_SIZE_KB(20480);
 #endif
 int randomcolor = 0;
 int buttondelay = 0;
-int startpoint = 10;
-int endpoint = 470;
+const int startpoint = 10;
+const int endpoint = 470;
 int dir = 0;
 int car_lau;
 int startvisible = 0;
