@@ -25,22 +25,7 @@ int dir = 0;
 int car_lau;
 int startvisible = 0;
 int waitend = 0;
-struct carrot {
-	int is; //stan
-	int color; //kolor
-	int h;
-	int x;
-	int col; //kolizja
-};
-  struct carrot c1;
-  struct carrot c2;
-  struct carrot c3;
-int blue = 1,
-	red = 0,
-	green = 0,
-	white = 0,
-	right = 0,
-	left = 0,
+int direction = 0,
 	color = 2;
 int startcounter = 0;	
 void carrot_launcher()
@@ -87,16 +72,6 @@ void counter_start()
 				rev = 0;
 			}
 		}
-}
-void resetscore()
-{
-	score=0;
-	scoredigit[5]=0;
-	scoredigit[4]=0;
-	scoredigit[3]=0;
-	scoredigit[2]=0;
-	scoredigit[1]=0;
-	scoredigit[0]=0;
 }
 void launch_carrot();
 int main()
@@ -206,7 +181,7 @@ int main()
 	while (1)
 	{
 		sceCtrlPeekBufferPositive(&pad,1);
-		if(screen==1)
+		if(screen==1) //menu
 		{
 		/*if(pad.Buttons & PSP_CTRL_TRIANGLE)
 		{
@@ -231,36 +206,8 @@ int main()
 			resetscore();
 		}
 	}
-	if(screen==2)
+	if(screen==2)//ingame
 	{
-		if (color == 1) 
-		{
-			green=0;
-			blue=0;
-			red=1;
-			white=0;
-		}
-		if (color == 2) 
-		{
-			green=0;
-			blue=1;
-			red=0;
-			white=0;
-		}
-		if (color == 3) 
-		{
-			green=1;
-			blue=0;
-			red=0;
-			white=0;
-		}
-		if (color == 4) 
-		{
-			green=0;
-			blue=0;
-			red=0;
-			white=1;
-		}
 		counter_();
 		if (buttondelay==0){
 			if (pad.Buttons & PSP_CTRL_SQUARE) 
@@ -285,15 +232,24 @@ int main()
 		drawsprite(background, 255, 480, 272, x_back,y_back,0);
 		if (pad.Buttons & PSP_CTRL_LEFT)    
 		{
-			if (xg >=startpoint)xg-=6;
-			left=1;
-			right=0;
+			if (direction==2) gainspeed();
+			else 
+			{
+				direction=2;
+				speed=1;
+			}
+			if (xg >=startpoint) xg-=speed;
 		}
+
 		if (pad.Buttons & PSP_CTRL_RIGHT)
 		{
-			if (xg <=endpoint)xg+=6;
-			left=0;
-			right=1;
+			if (direction==1) gainspeed();
+			else 
+			{
+				direction=1;
+				speed=1;
+			}
+			if (xg <=endpoint) xg+=speed;
 		}
 		if(c1.is == 1)
 		{	
@@ -442,19 +398,19 @@ int main()
 		g2dSetCoordXY(xg,220);
 		g2dSetCropWH(40,28);
 		g2dSetScaleWH(40,28);
-		if(right==1)
+		if(direction==1) //right
 		{
-			if(blue==1)g2dSetCropXY(0,1);
-			if(red==1)g2dSetCropXY(80,1);	
-			if(green==1)g2dSetCropXY(160,1);
-			if(white==1)g2dSetCropXY(240,1);
+			if(color==2)g2dSetCropXY(0,1); //blue
+			if(color==1)g2dSetCropXY(80,1); //red	
+			if(color==3)g2dSetCropXY(160,1); //green
+			if(color==4)g2dSetCropXY(240,1); //white
 		}
-		if(left==1)
+		if(direction==2) //left
 		{
-			if(blue==1)g2dSetCropXY(40,1);
-			if(red==1)g2dSetCropXY(120,1);	
-			if(green==1)g2dSetCropXY(200,1);
-			if(white==1)g2dSetCropXY(280,1);	
+			if(color==2)g2dSetCropXY(40,1); //blue
+			if(color==1)g2dSetCropXY(120,1);	//red
+			if(color==3)g2dSetCropXY(200,1); //green
+			if(color==4)g2dSetCropXY(280,1); //white
 		}	
 		g2dAdd();
 		g2dEnd();  
@@ -467,27 +423,30 @@ int main()
 		else drawsprite(emptyheart, 255, 18, 16, 52, 11, 0);
 		g2dFlip(G2D_VSYNC);	
 	}
-	if(screen==3)
+	if(screen==3)//game over screen
 	{
 		if(pad.Buttons & PSP_CTRL_CROSS)
 		{
 			screen=1;
 			life=3;
+			speed=1;
 			if(score>=hiscore)
 			{
 				hiscore=score;
-				screen=4;
-				mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
-				running = 1;
+				//screen=4;
+				//mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
+				//running = 1;
 			}
 			score=0;
+			
 		}
+		resetcarrots();
 		g2dClear(BLACK);
 		drawsprite(background, 255, 480, 272, x_back, y_back, 0);
 		drawsprite(game_over, 255, 143, 14, 240, 136, 0);
 		g2dFlip(G2D_VSYNC);	
 	}
-	if(screen==4)
+	if(screen==4) //Debug
 	{
 	while(running)
 	{

@@ -8,4 +8,5 @@ extern int counter;
 extern int rev;
 void counter_();
 void wait(int numOfSec);
+void gainspeed();
 #endif //GAME_MATH_INCLUDE

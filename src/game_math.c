@@ -1,6 +1,8 @@
 #include "game_math.h"
+#include "game.h"
 #include <time.h>
 int scoredigit[6];
+int accel;
 void score_math(int score)
 {
 	if(score<=99) scoredigit[4]=score/10;
@@ -60,4 +62,23 @@ void wait(int numOfSec)
 	int numOfMilliSec = 1000 * numOfSec;
 	time_t startTime = clock();
 	while(clock() < startTime + numOfMilliSec);
+}
+void resetscore()
+{
+	score=0;
+	scoredigit[5]=0;
+	scoredigit[4]=0;
+	scoredigit[3]=0;
+	scoredigit[2]=0;
+	scoredigit[1]=0;
+	scoredigit[0]=0;
+}
+void gainspeed()
+{
+	if (accel==10)
+	{
+		if (speed<=6) speed++;
+		accel=0;
+	}
+	else accel++;
 }
